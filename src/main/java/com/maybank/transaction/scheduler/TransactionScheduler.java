@@ -60,7 +60,7 @@ public class TransactionScheduler {
         try (DirectoryStream<Path> stream = Files.newDirectoryStream(Paths.get(inputDir), "*.txt")) {
             stream.forEach(this::processFileSafely);
         } catch (IOException ex) {
-            log.error("Error scanning input dir: {}", ex.getMessage());
+            log.error("Error scanning input directory: {}", ex.getMessage());
         }
     }
 
