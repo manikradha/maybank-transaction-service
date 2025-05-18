@@ -64,7 +64,7 @@
 			"response": []
 		},
 		{
-			"name": "Search All Transactions - Paginated",
+			"name": "Search All Transactions (Paginated)",
 			"request": {
 				"auth": {
 					"type": "bearer",
@@ -149,7 +149,7 @@
 			"response": []
 		},
 		{
-			"name": "Search by Account Numbers - Multiple",
+			"name": "Search by Account Numbers (Multiple)",
 			"request": {
 				"auth": {
 					"type": "bearer",
@@ -231,7 +231,7 @@
 			"response": []
 		},
 		{
-			"name": "Update Transaction Description",
+			"name": "Update Transaction Description (Optimistic Locking)",
 			"request": {
 				"auth": {
 					"type": "bearer",
