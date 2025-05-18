@@ -53,7 +53,7 @@ The **Maybank Transaction Service** is a Spring Boot-based application designed 
    - **Description**: Logs in a user and returns a JWT token.
 
 ### Transactions
-1. **Get All Transactions (Paginated)**
+1. **Search All Transactions (Paginated)**
    - **URL**: `POST /api/transactions/searchAll`
    - **Request Body**:
      ```json
@@ -66,7 +66,7 @@ The **Maybank Transaction Service** is a Spring Boot-based application designed 
      ```
    - **Description**: Retrieves all transactions with pagination and sorting.
 
-2. **Filter by Customer ID**
+2. **Search by Customer ID**
    - **URL**: `GET /api/transactions/search/customer/{customerId}`
    - **Request Body**:
      ```json
@@ -79,7 +79,7 @@ The **Maybank Transaction Service** is a Spring Boot-based application designed 
      ```
    - **Description**: Retrieves transactions for a specific customer ID.
 
-3. **Filter by Account Numbers**
+3. **Search by Account Numbers (Multiple)**
    - **URL**: `POST /api/transactions/search/accounts`
    - **Request Body**:
      ```json
@@ -107,7 +107,7 @@ The **Maybank Transaction Service** is a Spring Boot-based application designed 
      ```
    - **Description**: Searches transactions by description.
 
-5. **Update Transaction Description**
+5. **Update Transaction Description (Optimistic Locking)**
    - **URL**: `PUT /api/transactions/{transactionId}`
    - **Request Body**:
      ```json
