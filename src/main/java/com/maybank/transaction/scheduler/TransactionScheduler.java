@@ -109,7 +109,7 @@ public class TransactionScheduler {
             Path target = targetDir.resolve(source.getFileName());
             Files.move(source, target, StandardCopyOption.ATOMIC_MOVE);
 
-            log.info("Successfully moved {} → {}", source, target);
+            log.debug("Successfully moved file from {} to {}", source, target);
         } catch (IOException ex) {
             log.error("Failed to move file {}: {}", source, ex.getMessage());
             try {
