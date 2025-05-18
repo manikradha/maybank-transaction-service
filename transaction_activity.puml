@@ -1,0 +1,47 @@
+@startuml Transaction Service Activity Diagram
+
+title Transaction Service Architecture Workflow
+
+|User|
+|System|
+|Transaction System|
+|Database|
+|File System|
+
+start
+
+|User|
+:Login or Register;
+note right: Uses JWT for authentication
+
+|System|
+if (Valid Credentials?) then (Yes)
+  :Issue JWT Token;
+else (No)
+  :Log Error;
+  :Return Failure;
+  stop
+endif
+
+|Transaction System|
+:Monitor "Transactions-*" folder;
+:Process Transaction Request;
+
+|Database|
+if (Save to MySQL?) then (Success)
+  :Persist Transaction Data;
+  :Return "Success";
+  |File System|
+  :Move to "Processed" folder;
+  :Trigger "Successful-Transactions-*";
+else (Failure)
+  :Rollback Transaction;
+  :Return "Failure";
+  |File System|
+  :Move to "Failure" folder;
+  :Trigger "Failed-Transactions-*";
+endif
+
+stop
+
+@enduml

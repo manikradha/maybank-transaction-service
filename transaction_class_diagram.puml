@@ -1,0 +1,171 @@
+@startuml MaybankTransactionSystem
+
+package "Entity" {
+  class Transaction {
+    + Long id
+    + String accountNumber
+    + BigDecimal trxAmount
+    + String description
+    + LocalDate trxDate
+    + LocalTime trxTime
+    + String customerId
+  }
+
+  class User {
+    + Long id
+    + String username
+    + String password
+    + Set<Role> roles
+  }
+
+  class Role {
+    + Long id
+    + String name
+  }
+
+  User "1" *-- "0..*" Role : has
+}
+
+package "Service" {
+  class AuthService {
+    + getAuthToken()
+  }
+
+  class BankUserDetailsService {
+    + loadUserByUsername()
+    + registerUser()
+  }
+
+  class TransactionService {
+    + searchByCustomerId()
+    + searchByAccounts()
+    + updateDescription()
+  }
+}
+
+package "Controller" {
+  class AuthController {
+    + login()
+    + register()
+  }
+
+  class TransactionController {
+    + searchByCustomerId()
+    + searchByDescription()
+    + updateDescription()
+  }
+}
+
+package "Repository" {
+  interface TransactionRepository {
+    + findByCustomerId()
+    + findByAccountNumberIn()
+  }
+
+  interface UserRepository {
+    + findByUsername()
+    + existsByUsername()
+  }
+}
+
+package "Security" {
+  class SecurityConfig {
+    + securityFilterChain()
+  }
+
+  class JwtAuthenticationFilter {
+    + doFilterInternal()
+  }
+
+  class JwtTokenUtil {
+    + generateToken()
+    + validateToken()
+  }
+}
+
+package "Batch" {
+  class BatchConfig {
+    + importTransactionsJob()
+    + transactionStep()
+  }
+
+  class TransactionScheduler {
+    + scanInputDirectory()
+  }
+}
+
+package "DTO" {
+  class LoginRequest {
+    + String username
+    + String password
+  }
+
+  class AccountSearchDTO {
+    + List<String> accountNumbers
+  }
+
+  class PaginationDTO {
+    + toPageable()
+  }
+
+  AccountSearchDTO --|> PaginationDTO
+  DescriptionSearchDTO --|> PaginationDTO
+}
+
+package "Exception" {
+  class UsernameAlreadyExistsException
+  class JwtValidationException
+  class MaybankExceptionHandler
+}
+
+package "Utils" {
+  enum SortDirection {
+    ASC
+    DESC
+  }
+
+  enum SortField {
+    TRX_DATE
+    TRX_AMOUNT
+  }
+
+  interface TransactionFields
+}
+
+AuthController --> AuthService : depends on
+AuthController --> BankUserDetailsService : depends on
+TransactionController --> TransactionService : depends on
+
+AuthService --> JwtTokenUtil : uses
+AuthService --> AuthenticationManager : uses
+BankUserDetailsService --> UserRepository : uses
+BankUserDetailsService --> PasswordEncoder : uses
+
+TransactionService --> TransactionRepository : uses
+TransactionService --> SortField : uses
+TransactionService --> SortDirection : uses
+
+BatchConfig --> TransactionReader : uses
+BatchConfig --> TransactionProcessor : uses
+BatchConfig --> TransactionWriter : uses
+TransactionScheduler --> BatchConfig : triggers
+
+SecurityConfig --> JwtAuthenticationFilter : configures
+JwtAuthenticationFilter --> JwtTokenUtil : validates
+JwtAuthenticationFilter --> UserDetailsService : uses
+
+UserRepository --> User : manages
+TransactionRepository --> Transaction : manages
+
+MaybankExceptionHandler --> UsernameAlreadyExistsException : handles
+MaybankExceptionHandler --> JwtValidationException : handles
+MaybankExceptionHandler --> MethodArgumentNotValidException : handles
+
+TransactionController ..> AccountSearchDTO : consumes
+TransactionController ..> DescriptionSearchDTO : consumes
+TransactionController ..> PaginationDTO : consumes
+
+BankUserDetailsService ..> UsernameAlreadyExistsException : throws
+AuthService ..> BadCredentialsException : throws
+
+@enduml

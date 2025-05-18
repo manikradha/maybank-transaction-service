@@ -1,0 +1,274 @@
+{
+	"info": {
+		"_postman_id": "c5eda45d-f473-425b-9eea-fb9cd409db1d",
+		"name": "Maybank Transaction",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Register a New User",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"username\":\"newuser\", \"password\":\"12345678\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/auth/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"auth",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login and get JWT token",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"username\":\"newuser\", \"password\":\"12345678\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/auth/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search All Transactions - Paginated",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuZXd1c2VyMSIsImlhdCI6MTc0NzUzNzA2NywiZXhwIjoxNzQ3NTQwNjY3fQ.ldWuaVZZp1vhPoty19EGzfc2mbWdz9rEtyGc3zMs808",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"page\": 0,\r\n    \"size\": 20,\r\n    \"sortBy\": \"TRX_DATE\",\r\n    \"direction\": \"DESC\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/transactions/searchAll",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"transactions",
+						"searchAll"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search by Customer ID",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuZXd1c2VyMSIsImlhdCI6MTc0NzUzNzA2NywiZXhwIjoxNzQ3NTQwNjY3fQ.ldWuaVZZp1vhPoty19EGzfc2mbWdz9rEtyGc3zMs808",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"page\": 0,\r\n    \"size\": 5,\r\n    \"sortBy\": \"TRX_DATE\",\r\n    \"direction\": \"DESC\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/transactions/search/customer/222",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"transactions",
+						"search",
+						"customer",
+						"222"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search by Account Numbers - Multiple",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuZXd1c2VyMSIsImlhdCI6MTc0NzUzNzc0OSwiZXhwIjoxNzQ3NTQxMzQ5fQ.i1vTIQ4m1X7MQZ4rr-6Gg9L9AN9mGpEFFyBNxs-6AIE",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"accountNumbers\": [\"8872838283\", \"8872838299\"],\r\n    \"page\": 0,\r\n    \"size\": 10,\r\n    \"sortBy\": \"TRX_AMOUNT\",\r\n    \"direction\": \"ASC\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/transactions/search/accounts",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"transactions",
+						"search",
+						"accounts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search by Description",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuZXd1c2VyMSIsImlhdCI6MTc0NzUzNzc0OSwiZXhwIjoxNzQ3NTQxMzQ5fQ.i1vTIQ4m1X7MQZ4rr-6Gg9L9AN9mGpEFFyBNxs-6AIE",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"description\": \"FUND TRANSFER\",\r\n    \"page\": 0,\r\n    \"size\": 5,\r\n    \"sortBy\": \"TRX_DATE\",\r\n    \"direction\": \"DESC\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/transactions/search/description",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"transactions",
+						"search",
+						"description"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Transaction Description",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuZXd1c2VyMSIsImlhdCI6MTc0NzUzOTM5OSwiZXhwIjoxNzQ3NTQyOTk5fQ.OCtsSjQSvWDBw8xAMDJzJXczZ2bATdz29K-TGEMvoQU",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "Updated transaction description 3",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/transactions/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"transactions",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
