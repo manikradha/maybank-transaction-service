@@ -26,7 +26,7 @@ The **Maybank Transaction Service** is a Spring Boot-based application designed 
   - `com.maybank.transaction.service`: Service layer for business logic.
   - `com.maybank.transaction.web.rest`: REST controllers for API endpoints.
 - `src/test/java`: Contains unit tests.
-- `Maybank Transaction.postman_collection.json`: Postman collection for testing the APIs.
+- `maybank_transaction.postman_collection.json`: Postman collection for testing the APIs.
 
 ## API Endpoints
 ### Authentication
@@ -132,7 +132,7 @@ The **Maybank Transaction Service** is a Spring Boot-based application designed 
   ```bash
   mvn test
   ```
-- **Postman Collection**: Import the `Maybank Transaction.postman_collection.json` file into Postman to test the APIs.
+- **Postman Collection**: Import the `maybank_transaction.postman_collection.json` file into Postman to test the APIs.
 
 ## Postman Collection
 The provided Postman collection includes the following requests:
